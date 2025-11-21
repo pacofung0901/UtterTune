@@ -26,15 +26,20 @@ logger.addHandler(handler)
 logger.propagate = False
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--wav_root", type=Path, required=True)
-ap.add_argument("--out_dir", type=Path, required=True)
+ap.add_argument("--wav_root", type=str, required=True)
+ap.add_argument("--out_dir", type=str, required=True)
 ap.add_argument(
     "--onnx_path",
-    type=Path,
+    type=str,
     required=True,
     help="speech_tokenizer_v2.onnx from CosyVoice2 release",
 )
 args = ap.parse_args()
+
+# change to Path object
+args.wav_root = Path(args.wav_root)
+args.out_dir = Path(args.out_dir)
+args.onnx_path = Path(args.onnx_path)
 
 option = ort.SessionOptions()
 option.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
@@ -76,4 +81,4 @@ for wav in tqdm.tqdm(sorted(args.wav_root.rglob("*.wav"))):
         np.save(out, tokens)
         manifest_lines.append(f"{wav}	{out}")
 
-logger.info("✓", len(manifest_lines), "files →", args.out_dir)
+logger.info("✓", len(manifest_lines), "files →", str(args.out_dir))

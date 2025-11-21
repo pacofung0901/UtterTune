@@ -41,8 +41,9 @@ Because you only need LoRA for the target language.
 
 ### 1. Clone & Update Submodules
 ```bash
-git clone https://github.com/your-username/UtterTune.git
+git clone https://github.com/pacofung0901/UtterTune.git
 cd UtterTune
+git submodule sync
 git submodule update --init --recursive
 
 
@@ -56,19 +57,16 @@ git submodule update --init --recursive
 ```bash
 mkdir -p pretrained_models
 
-# Download CosyVoice2-0.5B
-git clone https://www.modelscope.cn/iic/CosyVoice2-0.5B.git pretrained_models/CosyVoice2-0.5B
-
-# Download LoRA weights
-git lfs install
-git clone https://huggingface.co/shuheikatoinfo/UtterTune-CosyVoice2-ja-JSUTJVS lora_weights/UtterTune-CosyVoice2-ja-JSUTJVS
+# Download LoRA weights and CosyVoice2-0.5B
+python download_pretrained.py
 ```
 
 ### 3. Setup a virtual environment
 ```bash
 # For CosyVoice 2
-python -m venv venvs/cv2. # 3.10
-. venvs/cv2/bin/activate
+conda create -n uttertune python=3.10
+conda activate uttertune
+pip install -r requirements.txt
 pip install -r submodules/CosyVoice/requirements.txt  -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com
 
 # Add path to CosyVoice repository
@@ -82,11 +80,11 @@ with open(pth, "w", encoding="utf-8") as f:
 print("Wrote:", pth)
 PY
 
-# If sox compatibility issues raised
-# Ubuntu
-sudo apt-get install sox libsox-dev
-# CentOS
-sudo yum install sox sox-devel
+# # If sox compatibility issues raised
+# # Ubuntu
+# sudo apt-get install sox libsox-dev
+# # CentOS
+# sudo yum install sox sox-devel
 ```
 
 ### 4. Inference

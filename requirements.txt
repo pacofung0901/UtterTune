@@ -1,3 +1,14 @@
 nvidia-ml-py==13.580.65
 peft==0.17.0
 transformers==4.49.0
+pydips
+pypinyin
+pycantonese
+ToJyutping
+g2p-en
+torch>=2.6.0
+openai-whisper
+torchaudio
+torchcodec
+onnxruntime-gpu==1.19
+sentencepiece

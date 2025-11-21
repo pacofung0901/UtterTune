@@ -14,6 +14,9 @@ Only *text* and *speech-token ids* are used for training.
 
 from __future__ import annotations
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+
 import argparse
 import random
 from logging import getLogger, StreamHandler, INFO
@@ -61,6 +64,8 @@ class CV2Trainer(Trainer):
         self,
         model,
         inputs,
+        prediction_loss_only: bool = False,
+        ignore_keys=None,
     ):
         with torch.no_grad():
             outputs = model(inputs, self.args.device)
